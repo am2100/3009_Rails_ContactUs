@@ -1,10 +1,10 @@
 class NotificationsMailer < ActionMailer::Base
-  default from: "from@example.com"
-  default   to: "you@youremail.com"
+  default from: "from@vivid-mist-6040.herokuapp.com"
+  default   to: "test@heritagepr.org.uk"
 
   def new_message(message)
     @message = message
-    mail(:subject => "[YourWebsite.tld] #{message.subject}")
+    mail(:subject => "[vivid-mist-6040.herokuapp.com] #{message.subject}")
   end
 
 end

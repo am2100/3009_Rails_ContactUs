@@ -66,7 +66,7 @@ module ContactUs
     config.action_mailer.smtp_settings = {
       :address              => "smtp.tiscali.co.uk",
       :port                 => 25,
-      :domain               => "example.com",
+      :domain               => "vivid-mist-6040.herokuapp.com",
       :user_name            => "jimandjacqui@tiscali.co.uk",
       :password             => "mexico",
       :authentication       => :plain,
@@ -74,7 +74,7 @@ module ContactUs
     }
 
     config.action_mailer.default_url_options = {
-      :host => "example.com"
+      :host => "vivid-mist-6040.herokuapp.com"
     }
   end
 end
