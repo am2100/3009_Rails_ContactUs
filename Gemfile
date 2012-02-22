@@ -10,6 +10,7 @@ group :development do
 end
 
 group :production do
+  gem 'thin', 
   gem 'pg', '0.12.2'
 end
 
