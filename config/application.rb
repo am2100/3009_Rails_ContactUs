@@ -62,19 +62,19 @@ module ContactUs
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
-    # Configure ActionMailer settings
-    config.action_mailer.smtp_settings = {
-      :address              => "smtp.gmail.com",
-      :port                 => 587,
-      :domain               => "vivid-mist-6040.herokuapp.com",
-      :user_name            => "jimandjacqui@tiscali.co.uk",
-      :password             => "mexico",
-      :authentication       => :plain,
-      :enable_starttls_auto => true
-    }
+#    # Configure ActionMailer settings
+#    config.action_mailer.smtp_settings = {
+#      :address              => "smtp.gmail.com",
+#      :port                 => 587,
+#      :domain               => "vivid-mist-6040.herokuapp.com",
+#      :user_name            => "jimandjacqui@tiscali.co.uk",
+#      :password             => "mexico",
+#      :authentication       => :plain,
+#      :enable_starttls_auto => true
+#    }
 
-    config.action_mailer.default_url_options = {
-      :host => "vivid-mist-6040.herokuapp.com"
-    }
+#    config.action_mailer.default_url_options = {
+#      :host => "vivid-mist-6040.herokuapp.com"
+#    }
   end
 end
