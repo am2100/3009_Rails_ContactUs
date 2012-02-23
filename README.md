@@ -14,20 +14,20 @@ Transcribed here by [Jim Noble](mailto:jimnoble@xjjz.co.uk) for [XJJZ
 ## Configure
 config/environments/production.rb
 
-config.action_mailer.default_url_options = { :host => 'myapp.heroku.com' }
-config.action_mailer.delivery_method = :smtp
-config.action_mailer.perform_deliveries = true
-config.action_mailer.raise_delivery_errors = false
-config.action_mailer.default :charset => "utf-8"
-config.action_mailer.smtp_settings = {
-  address: "smtp.gmail.com",
-  port: 587,
-  domain: "myapp.heroku.com",
-  authentication: "plain",
-  enable_starttls_auto: true,
-  user_name: ENV["GMAIL_USERNAME"],
-  password: ENV["GMAIL_PASSWORD"]
-}
+    config.action_mailer.default_url_options = { :host => 'myapp.heroku.com' }
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.perform_deliveries = true
+    config.action_mailer.raise_delivery_errors = false
+    config.action_mailer.default :charset => "utf-8"
+    config.action_mailer.smtp_settings = {
+      address: "smtp.gmail.com",
+      port: 587,
+      domain: "myapp.heroku.com",
+      authentication: "plain",
+      enable_starttls_auto: true,
+      user_name: ENV["GMAIL_USERNAME"],
+      password: ENV["GMAIL_PASSWORD"]
+    }
 
 ## Set ENV vars
 > heroku config:add GMAIL_USERNAME=no-reply@example.com GMAIL_PASSWORD=password
@@ -35,110 +35,110 @@ config.action_mailer.smtp_settings = {
 ## Model
 app/models/message.rb
 
-class Message
+    class Message
 
-  include ActiveModel::Validations
-  include ActiveModel::Conversion
-  extend  ActiveModel::Naming
+      include ActiveModel::Validations
+      include ActiveModel::Conversion
+      extend  ActiveModel::Naming
 
-  attr_accessor :name, :email, :subject, :body
+      attr_accessor :name, :email, :subject, :body
 
-  validates :name, :email, :subject, :body, :presence => true
-  validates :email, :format => { :with => %r{.+@.+\..+} }, :allow_blank => true
+      validates :name, :email, :subject, :body, :presence => true
+      validates :email, :format => { :with => %r{.+@.+\..+} }, :allow_blank => true
 
-  def initialize(attributes = {})
-    attributes.each do |name, value|
-      send("#{name}=", value)
+      def initialize(attributes = {})
+        attributes.each do |name, value|
+          send("#{name}=", value)
+        end
+      end
+
+      def persisted?
+        false
+      end
+
     end
-  end
-
-  def persisted?
-    false
-  end
-
-end
 
 ## Mailer
 app/mailers/notifications_mailer.rb
 
 > rails g mailer NotificationsMailer
 
-class NotificationsMailer < ActionMailer::Base
-  default from: "from@myapp.herokuapp.com"
-  default   to: "you@youremail.co.uk"
+    class NotificationsMailer < ActionMailer::Base
+      default from: "from@myapp.herokuapp.com"
+      default   to: "you@youremail.co.uk"
 
-  def new_message(message)
-    @message = message
-    mail(:subject => "[MyApp] #{message.subject}")
-  end
+      def new_message(message)
+        @message = message
+        mail(:subject => "[MyApp] #{message.subject}")
+      end
 
-end
+    end
 
 ## Text message view
 app/views/notifications_mailer/new_message.text.erb
 
-Name: <%= @message.name %>
+    Name: <%= @message.name %>
 
-Email: <%= @message.email %>
+    Email: <%= @message.email %>
 
-Subject: <%= @message.subject %>
+    Subject: <%= @message.subject %>
 
-Body: <%= @message.body %>
+    Body: <%= @message.body %>
 
 ## Controller
 app/controllers/contact_controller.rb
 
-class ContactController < ApplicationController
+    class ContactController < ApplicationController
 
-  def new
-    @message = Message.new
-  end
+      def new
+        @message = Message.new
+      end
 
-  def create
-    @message = Message.new(params[:message])
+      def create
+        @message = Message.new(params[:message])
 
-    if @message.valid?
-      NotificationsMailer.new_message(@message).deliver
-      redirect_to(contact_path, :notice => "Message was successfully sent.")
-    else
-      flash.now.alert = "Please fill all fields."
-      render :new
+        if @message.valid?
+          NotificationsMailer.new_message(@message).deliver
+          redirect_to(contact_path, :notice => "Message was successfully sent.")
+        else
+          flash.now.alert = "Please fill all fields."
+          render :new
+        end
+
+      end
+
     end
-
-  end
-
-end
 
 ## Routes
 config/routes.rb
 
-  match 'contact' => 'contact#new',    :as => 'contact', :via => :get
-  match 'contact' => 'contact#create', :as => 'contact', :via => :post
+    match 'contact' => 'contact#new',    :as => 'contact', :via => :get
+    match 'contact' => 'contact#create', :as => 'contact', :via => :post
 
 ## View
 app/views/contact/new.html.erb
 
-<%= form_for @message, :url => contact_path do |f| %>
-  <table id="email">
-    <tr>
-      <td class="right"><%= f.label :name, "Your name:" %></td>
-      <td><%= f.text_field :name %></td>
-    </tr>
-    <tr>
-      <td class="right"><%= f.label :email %></td>
-      <td><%= f.text_field :email %></td>
-    </tr>
-    <tr>
-      <td class="right"><%= f.label :subject %></td>
-      <td><%= f.text_field :subject %></td>
-    </tr>
-    <tr>
-      <td colspan="2"><%= f.text_area :body %></td>
-    </tr>
-    <tr>
-      <td colspan="2" class="shim"><%= f.submit "Send" %></td>
-    </tr>
-  </table>
-<% end %>
+    <%= form_for @message, :url => contact_path do |f| %>
+      <table id="email">
+        <tr>
+          <td class="right"><%= f.label :name, "Your name:" %></td>
+          <td><%= f.text_field :name %></td>
+        </tr>
+        <tr>
+          <td class="right"><%= f.label :email %></td>
+          <td><%= f.text_field :email %></td>
+        </tr>
+        <tr>
+          <td class="right"><%= f.label :subject %></td>
+          <td><%= f.text_field :subject %></td>
+        </tr>
+        <tr>
+          <td colspan="2"><%= f.text_area :body %></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="shim"><%= f.submit "Send" %></td>
+        </tr>
+      </table>
+    <% end %>
 
 
