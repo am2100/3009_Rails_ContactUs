@@ -1,15 +1,22 @@
 <%= form_for @message, :url => contact_path do |f| %>
-  <%= f.label :name %><br />
-  <%= f.text_field :name %><br />
-
-  <%= f.label :email %><br />
-  <%= f.text_field :email %><br />
-
-  <%= f.label :subject %><br />
-  <%= f.text_field :subject %><br />
-
-  <%= f.label :body %>
-  <%= f.text_area :body %>
-
-  <%= f.submit "Send" %>
+  <table id="email">
+    <tr>
+      <td class="right"><%= f.label :name, "Your name:" %></td>
+      <td><%= f.text_field :name %></td>
+    </tr>
+    <tr>
+      <td class="right"><%= f.label :email %></td>
+      <td><%= f.text_field :email %></td>
+    </tr>
+    <tr>
+      <td class="right"><%= f.label :subject %></td>
+      <td><%= f.text_field :subject %></td>
+    </tr>
+    <tr>
+      <td colspan="2"><%= f.text_area :body %></td>
+    </tr>
+    <tr>
+      <td colspan="2" class="shim"><%= f.submit "Send" %></td>
+    </tr>
+  </table>
 <% end %>
